@@ -3,20 +3,19 @@
  */
 const express = require('express');
 const compression = require('compression');
-const session = require('express-session');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const chalk = require('chalk');
 const errorHandler = require('errorhandler');
 const dotenv = require('dotenv');
-const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
-
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
-dotenv.load({ path: '.env.example' });
+dotenv.load({
+  path: '.env'
+});
 
 /**
  * Controllers.
@@ -42,32 +41,32 @@ mongoose.connection.on('error', (err) => {
   process.exit();
 });
 
+/*
+ * Slack configuration.
+ */
+const slack = require('./slack');
+app.use('/slack/events', slack.slackEvents.expressMiddleware());
+
 /**
  * Express configuration.
  */
 app.set('host', '0.0.0.0');
-app.set('port', process.env.PORT ||  8080);
+app.set('port', process.env.PORT || 8080);
 app.use(compression());
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({
-  resave: true,
-  saveUninitialized: true,
-  secret: process.env.SESSION_SECRET,
-  cookie: { maxAge: 1209600000 }, // two weeks in milliseconds
-  store: new MongoStore({
-    url: process.env.MONGODB_URI,
-    autoReconnect: true,
-  })
+app.use(bodyParser.urlencoded({
+  extended: true
 }));
 
 app.disable('x-powered-by');
 
 /**
  * Routes .
-*/
-
+ */
+app.post('/slack/events', (req, res) => {
+  res.json(req.body.challenge);
+})
 
 /**
  * Error Handler.

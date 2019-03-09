@@ -1,6 +1,6 @@
 {
   "name": "Zappy",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "",
   "author": "Mahmoud Wael",
   "scripts": {
@@ -9,6 +9,7 @@
     "lint": "eslint \"**/*.js\""
   },
   "dependencies": {
+    "@slack/events-api": "2.2.0",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.2",
@@ -22,6 +23,7 @@
     "mongoose": "^5.4.15",
     "morgan": "^1.9.1",
     "request": "^2.88.0",
+    "slack": "11.0.2",
     "stripe": "^6.25.1",
     "twit": "^2.2.11",
     "validator": "^10.11.0"
