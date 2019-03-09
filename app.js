@@ -17,11 +17,6 @@ dotenv.load({
   path: '.env'
 });
 
-/**
- * Controllers.
- */
-
-const tweetsController = require('./controllers/tweets');
 
 /**
  * Create Express server.
@@ -44,8 +39,14 @@ mongoose.connection.on('error', (err) => {
 /*
  * Slack configuration.
  */
-const slack = require('./slack');
+const slack = require('./config/slack');
 app.use('/slack/events', slack.slackEvents.expressMiddleware());
+
+/*
+ * Twitter configuration.
+ */
+const twitter = require('./config/twitter');
+
 
 /**
  * Express configuration.
