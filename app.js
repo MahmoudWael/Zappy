@@ -40,7 +40,13 @@ mongoose.connection.on('error', (err) => {
  * Slack configuration.
  */
 const slack = require('./config/slack');
+
 app.use('/slack/events', slack.slackEvents.expressMiddleware());
+
+/*
+ * Twitter init.
+ */
+require('./config/twitter');
 
 
 /**
@@ -61,23 +67,25 @@ app.disable('x-powered-by');
 /*
  * Models
  */
-const Tweets = require('./models/Tweets');
+const {
+  Tweets
+} = require('./models/Tweets');
 
 /**
  * Routes .
  */
-app.post('/slack/events', (req, res) => {
-  res.json(req.body.challenge);
-})
-
-app.get('/tweets', async (req, res) => {
+app.get('/', async (req, res) => {
   try {
-    let tweets = await Tweets.find().exec();
+    const tweets = await Tweets.find({}).exec();
     res.json(tweets);
   } catch (error) {
     res.json(error);
   }
-})
+});
+
+app.post('/slack/events', (req, res) => {
+  res.json(req.body.challenge);
+});
 
 /**
  * Error Handler.
