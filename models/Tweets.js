@@ -20,7 +20,7 @@ const Tweets = mongoose.model('Tweets', tweetsSchema);
 
 Tweets.saveTweets = function (tweetsObj) {
   tweetsObj = filterParams(tweetsObj);
-  console.log('inside saveTweets', tweetsObj);
+  this.insertMany(tweetsObj).then((res) => console.log('new records saved!', res)).catch(err => console.log(err));
 };
 
 module.exports = Tweets;
