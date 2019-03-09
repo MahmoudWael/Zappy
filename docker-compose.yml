@@ -15,4 +15,3 @@ services:
     volumes:
      - .:/starter
      - /starter/node_modules
-     

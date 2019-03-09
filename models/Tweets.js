@@ -18,9 +18,13 @@ const tweetsSchema = new mongoose.Schema({
 
 const Tweets = mongoose.model('Tweets', tweetsSchema);
 
+/**
+ * @function saveTweets saves new tweets to tweets collection
+ * @param  {} tweetsObj
+ */
 Tweets.saveTweets = function (tweetsObj) {
   tweetsObj = filterParams(tweetsObj);
-  this.insertMany(tweetsObj).then((res) => console.log('new records saved!', res)).catch(err => console.log(err));
+  this.insertMany(tweetsObj).then((res) => console.log('new records saved!')).catch(err => console.log(err));
 };
 
 module.exports = Tweets;
