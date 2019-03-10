@@ -57,6 +57,7 @@ Using Slack's  [Events API](https://api.slack.com/events-api) and [@slack/events
 > 
 > 
 > **request URL** slack use it to reach your server, if you are in development mode you could you [ngrok](https://ngrok.com/) to generate a request url.
+> **NOTICE THAT:** you should add the uri **/slack/events** to the request url or change it from app.js file  
 ![ngrok](https://github.com/slackapi/node-slack-events-api/raw/master/support/ngrok.gif)
 
 
